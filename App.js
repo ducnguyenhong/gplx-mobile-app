@@ -1,3 +1,5 @@
+import { NavigationContainer } from '@react-navigation/native';
+import Text from 'components/text';
 import dayjs from 'dayjs';
 import 'dayjs/locale/vi';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
@@ -26,7 +28,9 @@ const App = () => {
       <RecoilRoot>
         <QueryClientProvider client={queryClient}>
           <SafeAreaProvider>
-            <AppRoute />
+            <NavigationContainer>
+              <AppRoute />
+            </NavigationContainer>
           </SafeAreaProvider>
         </QueryClientProvider>
       </RecoilRoot>
@@ -35,4 +39,4 @@ const App = () => {
   );
 };
 
-export default App
+export default App;
