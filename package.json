@@ -1,0 +1,55 @@
+{
+  "name": "gplx",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "start": "react-native start",
+    "test": "jest",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.17.3",
+    "@react-native-community/clipboard": "^1.5.1",
+    "@react-navigation/bottom-tabs": "^6.3.1",
+    "@react-navigation/native": "^6.0.10",
+    "@react-navigation/native-stack": "^6.6.1",
+    "axios": "^0.26.1",
+    "babel-preset-react-native": "^4.0.1",
+    "dayjs": "^1.11.0",
+    "lodash": "^4.17.21",
+    "react": "18.1.0",
+    "react-native": "0.70.0",
+    "react-native-fast-image": "^8.5.11",
+    "react-native-gesture-handler": "^2.5.0",
+    "react-native-safe-area-context": "^4.2.4",
+    "react-native-screens": "^3.13.1",
+    "react-native-splash-screen": "^3.3.0",
+    "react-native-tab-view": "^3.1.1",
+    "react-native-toast-message": "^2.1.5",
+    "react-native-vector-icons": "9.1.0",
+    "react-native-webview": "^11.18.1",
+    "react-query": "^3.34.19",
+    "recoil": "^0.7.1"
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.17.0",
+    "@babel/plugin-transform-react-jsx": "^7.17.12",
+    "@babel/runtime": "^7.17.9",
+    "@react-native-community/eslint-config": "^3.0.1",
+    "babel-jest": "^28.0.3",
+    "babel-plugin-module-resolver": "^4.1.0",
+    "eslint": "^8.14.0",
+    "eslint-plugin-flowtype": "^8.0.3",
+    "eslint-plugin-react-native": "^4.0.0",
+    "jest": "^28.0.3",
+    "jetifier": "^2.0.0",
+    "metro-react-native-babel-preset": "^0.70.2",
+    "prettier": "^2.6.2",
+    "react-test-renderer": "18.1.0"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}
