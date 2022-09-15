@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
   vMain: {
     height: 54,
-    backgroundColor: '#FFF',
+    backgroundColor: '#1687CB',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -32,10 +32,11 @@ export const styles = StyleSheet.create({
 
   vCenter: {
     flex: 1,
+    marginLeft: 10,
   },
 
   tTitle: {
-    color: '#121238',
+    color: '#FFF',
     fontSize: 18,
     // fontFamily: 'Averta-Semibold',
   },

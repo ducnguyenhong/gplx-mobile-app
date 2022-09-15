@@ -3,6 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import Text from 'components/text';
 import { memo, useCallback } from 'react';
 import { TouchableOpacity, View } from 'react-native';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { styles } from './navigation-bar.style';
 
 const NavigationBar = props => {
@@ -12,9 +13,10 @@ const NavigationBar = props => {
     NavigationLeft,
     NavigationRight,
     onPressGoBack,
+    showBack = true,
   } = props;
 
-  const navigation = useNavigation()
+  const navigation = useNavigation();
 
   const onGoBack = useCallback(() => {
     if (onPressGoBack) {
@@ -28,15 +30,15 @@ const NavigationBar = props => {
     <View style={styles.vMain}>
       <View style={styles.vWrapperLeftCenter}>
         <View style={styles.vLeft}>
-          {NavigationLeft || (
-            <TouchableOpacity
-              style={styles.toBack}
-              activeOpacity={0.8}
-              onPress={onGoBack}>
-              {/* <Image source={IconBack} style={styles.imgIconBack} /> */}
-              <Text>Back</Text>
-            </TouchableOpacity>
-          )}
+          {NavigationLeft ||
+            (showBack && (
+              <TouchableOpacity
+                style={styles.toBack}
+                activeOpacity={0.8}
+                onPress={onGoBack}>
+                <FontAwesome5 name="arrow-left" color="#FFF" size={18} />
+              </TouchableOpacity>
+            ))}
         </View>
 
         <View style={styles.vCenter}>
