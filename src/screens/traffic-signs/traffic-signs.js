@@ -11,7 +11,7 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import DefaultImage from '../../assets/images/traffic-signs/P101.png';
+import DefaultImage from './images/P101.png';
 import { styles } from './traffic-signs.style';
 
 const DEFAULT_IMAGE = Image.resolveAssetSource(DefaultImage).uri;
@@ -75,6 +75,7 @@ const DATA = [
 const TrafficSigns = () => {
   const navigation = useNavigation();
   const [height, setHeight] = useState(0);
+  const [isChangeView, setIsChangeView] = useState(false)
 
   const onOpenTrafficSign = useCallback(
     (icon, code, name, content) => {
@@ -100,6 +101,8 @@ const TrafficSigns = () => {
         <SectionList
           sections={DATA}
           keyExtractor={item => `${item.code}`}
+          stickySectionHeadersEnabled
+          onViewableItemsChanged={() => {setIsChangeView(true)}}
           renderItem={({ item }) => (
             <TouchableOpacity
               activeOpacity={1}
@@ -121,8 +124,8 @@ const TrafficSigns = () => {
             </TouchableOpacity>
           )}
           renderSectionHeader={({ section: { title } }) => (
-            <View style={{ backgroundColor: '#eee' }}>
-              <Text style={styles.header}>{title}</Text>
+            <View style={[styles.trafficSignHeaderList, { opacity: isChangeView ? 0.8 : 1}]}>
+              <Text style={styles.trafficSignHeaderListText}>{title}</Text>
             </View>
           )}
         />

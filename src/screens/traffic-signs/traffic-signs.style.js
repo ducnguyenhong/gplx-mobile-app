@@ -13,6 +13,15 @@ export const styles = StyleSheet.create({
   statusBarStyle: {
     backgroundColor: '#3498db'
   },
+  trafficSignHeaderList: {
+    backgroundColor: '#95a5a6',
+    justifyContent: 'center',
+    padding: 20
+  },
+  trafficSignHeaderListText: {
+    fontSize: 20,
+    fontWeight: '700'
+  },
   trafficSign: {
     flexDirection: 'row',
     padding: 12,
