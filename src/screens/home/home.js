@@ -21,7 +21,6 @@ const Home = () => {
   );
 
   const onOpenSetting = useCallback(() => {
-    console.log('ducnh');
     navigation.navigate('SelectLicense');
   }, [navigation]);
 

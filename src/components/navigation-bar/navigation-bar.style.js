@@ -4,6 +4,7 @@ export const styles = StyleSheet.create({
   vMain: {
     height: 54,
     backgroundColor: '#1687CB',
+    // backgroundColor: '#3498db',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -37,7 +38,8 @@ export const styles = StyleSheet.create({
 
   tTitle: {
     color: '#FFF',
-    fontSize: 18,
+    fontSize: 22,
+    fontWeight: '600',
     // fontFamily: 'Averta-Semibold',
   },
 
