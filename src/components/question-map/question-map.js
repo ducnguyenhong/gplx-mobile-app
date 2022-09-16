@@ -1,35 +1,27 @@
 import Text from 'components/text';
-import { memo, useEffect, useState } from 'react';
+import { memo } from 'react';
 import { FlatList, View } from 'react-native';
+import { useRecoilValue } from 'recoil';
+import { statusSentenceAtom } from '../take-exam/recoil/status-sentence';
 import { styles } from './question-map.style';
+import QuestionMapTimer from './question-map.timer';
 
-const getMapBgColor = (index, currentQuestionIndex) => {
+const getMapBgColor = (index, currentQuestionIndex, statusSentences) => {
+  const currentQuestion = statusSentences.find(item => item.id === index);
+  if (currentQuestion?.status === false) {
+    return 'red';
+  }
+  if (currentQuestion?.status === true) {
+    return 'green';
+  }
   if (currentQuestionIndex === index) {
     return 'orange';
   }
   return '#bae0f7';
 };
 
-const QuestionMap = ({ questionList, currentQuestionIndex }) => {
-  const [minutes, setMinutes] = useState(22);
-  const [seconds, setSeconds] = useState(0);
-
-  useEffect(() => {
-    let myInterval = setInterval(() => {
-      if (seconds > 0) {
-        setSeconds(seconds - 1);
-      }
-      if (seconds === 0) {
-        if (minutes === 0) {
-          clearInterval(myInterval);
-        } else {
-          setMinutes(minutes - 1);
-          setSeconds(59);
-        }
-      }
-    }, 1000);
-    return () => clearInterval(myInterval);
-  });
+const QuestionMap = ({ questionList, currentQuestionIndex, examKey }) => {
+  const statusSentences = useRecoilValue(statusSentenceAtom(examKey));
 
   return (
     <View style={styles.vMain}>
@@ -45,7 +37,11 @@ const QuestionMap = ({ questionList, currentQuestionIndex }) => {
                 style={[
                   styles.vItem,
                   {
-                    backgroundColor: getMapBgColor(index, currentQuestionIndex),
+                    backgroundColor: getMapBgColor(
+                      index,
+                      currentQuestionIndex,
+                      statusSentences,
+                    ),
                   },
                 ]}
               />
@@ -58,9 +54,7 @@ const QuestionMap = ({ questionList, currentQuestionIndex }) => {
         </Text>
       </View>
 
-      <Text style={styles.tTime}>
-        {minutes}:{`${seconds}`.length === 2 ? seconds : `0${seconds}`}
-      </Text>
+      <QuestionMapTimer />
     </View>
   );
 };
