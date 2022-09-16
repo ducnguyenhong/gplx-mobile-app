@@ -3,6 +3,7 @@ import ReviewQuestion from 'screens/review-question';
 import SelectLicense from 'screens/select-license';
 import TrafficSignDetail from 'screens/traffic-sign-detail';
 import TrafficSigns from 'screens/traffic-signs';
+import WeakPoint from 'screens/weak-point';
 
 export const HOME_ROUTES = [
   {
@@ -32,5 +33,12 @@ export const REVIEW_QUESTION_ROUTES = [
   {
     name: 'ReviewQuestion',
     component: ReviewQuestion,
+  },
+];
+
+export const WEAKPOINT_ROUTES = [
+  {
+    name: 'WeakPoint',
+    component: WeakPoint,
   },
 ];

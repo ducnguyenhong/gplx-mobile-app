@@ -11,6 +11,7 @@ export const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: '#E6E6E6',
     paddingVertical: 5,
+    marginTop: 5,
   },
 
   vAnswer: {
@@ -24,5 +25,36 @@ export const styles = StyleSheet.create({
   tAnswer: {
     fontSize: 16,
     marginLeft: 5,
+  },
+
+  tAnswerCorrect: {
+    fontSize: 16,
+    marginLeft: 5,
+    color: 'green',
+    fontWeight: '600',
+  },
+
+  vExplain: {
+    backgroundColor: '#ffffb3',
+    marginTop: 10,
+    padding: 5,
+    paddingBottom: 10,
+  },
+
+  vExplainLabel: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+
+  tExplainLabel: {
+    color: 'red',
+    fontWeight: '600',
+    fontSize: 16,
+    marginLeft: 5,
+  },
+
+  tExplainContent: {
+    fontSize: 16,
+    marginTop: 3,
   },
 });

@@ -45,7 +45,7 @@ export const HOME_MENU = [
     title: '60 câu điểm liệt',
     icon: <Octicon name="shield-check" size={32} color="#FFF" />,
     bgColor: '#795549',
-    route: 'WeakPoints',
+    route: 'WeakPoint',
   },
   {
     title: 'Top 50 câu sai',
