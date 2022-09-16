@@ -3,6 +3,7 @@ import ReviewQuestion from 'screens/review-question';
 import SelectLicense from 'screens/select-license';
 import TrafficSignDetail from 'screens/traffic-sign-detail';
 import TrafficSigns from 'screens/traffic-signs';
+import MemorizationTips from '../screens/memorization-tips';
 
 export const HOME_ROUTES = [
   {
@@ -34,3 +35,13 @@ export const REVIEW_QUESTION_ROUTES = [
     component: ReviewQuestion,
   },
 ];
+
+// ví dụ màn Home có ô Mẹo ghi nhớ, thì tất cả các screen nằm trong đấy sẽ khai báo ở đây   
+export const MEMORIZATION_TIPS = [
+  {
+    name: 'MemorizationTips',
+    component: MemorizationTips,
+  },
+];
+
+
