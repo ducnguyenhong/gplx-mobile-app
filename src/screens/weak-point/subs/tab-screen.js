@@ -2,6 +2,8 @@ import CollapseList from 'components/collapse-list';
 import Question from 'components/question';
 import { memo } from 'react';
 import { SafeAreaView, ScrollView } from 'react-native';
+import { useRecoilState } from 'recoil';
+import { selectedSentenceAtom } from '../recoil/selected-sentence';
 
 const testData = {
   question: 'Câu hỏi Câu hỏi Câu hỏi Câu hỏi Câu hỏi Câu hỏi Câu hỏi',
@@ -29,13 +31,19 @@ const testData = {
   },
 };
 
-const TabScreen = () => {
+const TabScreen = ({ questionList }) => {
+  const [activeTab, setActiveTab] = useRecoilState(selectedSentenceAtom);
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#FFF' }}>
       <ScrollView contentContainerStyle={{ flex: 1 }}>
         <Question data={testData} />
       </ScrollView>
-      <CollapseList />
+      <CollapseList
+        questionList={questionList}
+        currentQuestionIndex={activeTab}
+        onSelectQuestion={(tab, index) => setActiveTab(index)}
+      />
     </SafeAreaView>
   );
 };

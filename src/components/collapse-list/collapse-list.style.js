@@ -8,29 +8,34 @@ export const styles = StyleSheet.create({
   },
 
   vControlLeft: {
-    flex: 1 / 3,
+    flex: 1 / 5,
+    alignItems: 'flex-start',
+    paddingLeft: 10,
   },
 
   vControlRight: {
-    flex: 1 / 3,
+    flex: 1 / 5,
     alignItems: 'flex-end',
+    paddingRight: 10,
   },
 
   vControlCenter: {
-    flex: 1 / 3,
-    justifyContent: 'center',
+    flex: 3 / 5,
   },
 
   toControlSide: {
     borderWidth: 1,
-    borderColor: 'gray',
-    borderRadius: 3,
+    borderColor: '#737373',
+    borderRadius: 5,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
   },
 
   toControlCenter: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 14,
+    justifyContent: 'center',
   },
 
   tControlCenter: {
@@ -56,6 +61,6 @@ export const styles = StyleSheet.create({
   },
 
   tQuestionItem: {
-    fontSize: 24,
+    fontSize: 22,
   },
 });
