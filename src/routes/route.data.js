@@ -9,6 +9,7 @@ import SeeWrongQuestion from '../screens/see-wrong-question';
 import TakeExamDetail from '../screens/take-exam-detail';
 import TakeExamList from '../screens/take-exam-list';
 import WrongQuestion from '../screens/wrong-question';
+import MemorizationTips from '../screens/memorization-tips';
 
 export const HOME_ROUTES = [
   {
@@ -67,3 +68,13 @@ export const WEAKPOINT_ROUTES = [
     component: WeakPoint,
   },
 ];
+
+// ví dụ màn Home có ô Mẹo ghi nhớ, thì tất cả các screen nằm trong đấy sẽ khai báo ở đây   
+export const MEMORIZATION_TIPS = [
+  {
+    name: 'MemorizationTips',
+    component: MemorizationTips,
+  },
+];
+
+
