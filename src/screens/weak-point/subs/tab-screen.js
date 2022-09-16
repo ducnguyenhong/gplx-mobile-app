@@ -1,6 +1,7 @@
+import CollapseList from 'components/collapse-list';
 import Question from 'components/question';
 import { memo } from 'react';
-import { View } from 'react-native';
+import { SafeAreaView, ScrollView } from 'react-native';
 
 const testData = {
   question: 'Câu hỏi Câu hỏi Câu hỏi Câu hỏi Câu hỏi Câu hỏi Câu hỏi',
@@ -30,9 +31,12 @@ const testData = {
 
 const TabScreen = () => {
   return (
-    <View style={{ flex: 1, backgroundColor: '#FFF' }}>
-      <Question data={testData} />
-    </View>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#FFF' }}>
+      <ScrollView contentContainerStyle={{ flex: 1 }}>
+        <Question data={testData} />
+      </ScrollView>
+      <CollapseList />
+    </SafeAreaView>
   );
 };
 

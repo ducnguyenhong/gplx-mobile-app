@@ -22,18 +22,18 @@ const getCheckBoxIcon = (index, selectedAnswer, correctAnswer) => {
 };
 
 const Question = ({ data }) => {
-  const { question, answers, readOnly, defaultData } = data;
+  const { question, answers, defaultData } = data;
   const [selectedAnswer, setSelectedAnswer] = useState();
   const { correctAnswer, explainAnswer } = defaultData || {};
 
   const onSelectAnswer = useCallback(
     index => {
-      if (readOnly) {
+      if (defaultData) {
         return;
       }
       setSelectedAnswer(index !== selectedAnswer ? index : undefined);
     },
-    [selectedAnswer, readOnly],
+    [selectedAnswer, defaultData],
   );
 
   return (
