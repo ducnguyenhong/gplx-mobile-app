@@ -2,16 +2,21 @@ import Text from 'components/text';
 import { memo, useCallback, useState } from 'react';
 import { FlatList, TouchableHighlight, View } from 'react-native';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useRecoilValue } from 'recoil';
+import { statusSentenceAtom } from '../take-exam/recoil/status-sentence';
 import { styles } from './question.style';
 
-const getCheckBoxColor = (index, selectedAnswer, correctAnswer) => {
-  if (correctAnswer && correctAnswer === index) {
+const getCheckBoxColor = (index, selectedAnswer, correctAnswer, status) => {
+  if (status === false) {
+    return 'red';
+  }
+  if ((correctAnswer && correctAnswer === index) || status) {
     return 'green';
   }
   return index === selectedAnswer ? 'orange' : 'gray';
 };
 
-const getCheckBoxIcon = (index, selectedAnswer, correctAnswer) => {
+const getCheckBoxIcon = (index, selectedAnswer, correctAnswer, status) => {
   if (correctAnswer && correctAnswer === index) {
     return 'check-circle';
   }
@@ -21,18 +26,30 @@ const getCheckBoxIcon = (index, selectedAnswer, correctAnswer) => {
     : 'checkbox-blank-circle-outline';
 };
 
-const Question = ({ data, readOnly }) => {
-  const { question, answers, correctAnswer, explainAnswer } = data;
+const Question = props => {
+  const { data, readOnly, getCurrentAnswer, status, examKey } = props;
+  const {
+    question,
+    answers,
+    correctAnswer,
+    correctAnswerWhenCheck,
+    explainAnswer,
+  } = data;
   const [selectedAnswer, setSelectedAnswer] = useState();
+  const statusSentences = useRecoilValue(statusSentenceAtom(examKey));
+
+  const checkStatus = statusSentences.find(item => item.id === data.id);
 
   const onSelectAnswer = useCallback(
-    index => {
+    (item, index) => {
       if (readOnly) {
         return;
       }
+      getCurrentAnswer && getCurrentAnswer(item, index, data.id);
+
       setSelectedAnswer(index !== selectedAnswer ? index : undefined);
     },
-    [selectedAnswer, readOnly],
+    [readOnly, getCurrentAnswer, data.id, selectedAnswer],
   );
 
   return (
@@ -41,27 +58,33 @@ const Question = ({ data, readOnly }) => {
 
       <FlatList
         data={answers}
-        keyExtractor={(_, index) => index}
+        keyExtractor={(item, index) => index}
         renderItem={({ item, index }) => (
           <TouchableHighlight
             style={styles.toAnswer}
             underlayColor={readOnly ? '#FFF' : '#F0F0F5'}
             activeOpacity={readOnly ? 1 : 0.8}
-            onPress={() => onSelectAnswer(index)}>
+            onPress={() => onSelectAnswer(item, index)}>
             {/* check-circle */}
             <View style={styles.vAnswer}>
               <MCIcon
-                name={getCheckBoxIcon(index + 1, selectedAnswer, correctAnswer)}
-                size={25}
-                color={getCheckBoxColor(
-                  index + 1,
+                name={getCheckBoxIcon(
+                  index,
                   selectedAnswer,
                   correctAnswer,
+                  status,
+                )}
+                size={25}
+                color={getCheckBoxColor(
+                  index,
+                  selectedAnswer,
+                  correctAnswer,
+                  status,
                 )}
               />
               <Text
                 style={
-                  correctAnswer && correctAnswer === index + 1
+                  correctAnswer && correctAnswer === index
                     ? styles.tAnswerCorrect
                     : styles.tAnswer
                 }>

@@ -7,6 +7,7 @@ const RandomExam = () => {
   const selectedLisence = useRecoilValue(selectedLicenseAtom);
   return (
     <TakeExam
+      examKey="RANDOM"
       title={`Đề thi ngẫu nhiên Bằng ${selectedLisence}`}
       questionList={questionListTakeExam}
     />

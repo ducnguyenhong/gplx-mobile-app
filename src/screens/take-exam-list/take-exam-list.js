@@ -20,7 +20,9 @@ const TakeExamList = () => {
         numColumns={3}
         renderItem={({ item }) => (
           <TouchableOpacity
-            onPress={() => navigation.navigate('TakeExamDetail')}
+            onPress={() =>
+              navigation.navigate('TakeExamDetail', { id: item.value })
+            }
             activeOpacity={0.8}
             style={{
               alignItems: 'center',

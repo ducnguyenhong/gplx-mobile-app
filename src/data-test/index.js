@@ -21,6 +21,7 @@ export const questionListTakeExam = Array.from(Array(20).keys()).map(item => ({
     },
   ],
   correctAnswer: '',
+  correctAnswerWhenCheck: 3,
   explainAnswer: '',
 }));
 
@@ -47,5 +48,6 @@ export const questionListStudy = Array.from(Array(20).keys()).map(item => ({
     },
   ],
   correctAnswer: Math.floor(Math.random() * (4 - 1 + 1) + 1),
+  correctAnswerWhenCheck: '',
   explainAnswer: 'Giải thích đáp án này...',
 }));
