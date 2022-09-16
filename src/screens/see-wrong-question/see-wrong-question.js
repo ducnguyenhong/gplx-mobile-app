@@ -1,14 +1,14 @@
 import TakeExam from 'components/take-exam';
 import { questionListStudy } from '../../data-test';
 
-const WeakPoint = () => {
+const SeeWrongQuestion = () => {
   return (
     <TakeExam
       readOnly
-      title="60 câu hỏi điểm liệt"
+      title="Câu hỏi sai nhiều"
       questionList={questionListStudy}
     />
   );
 };
 
-export default WeakPoint;
+export default SeeWrongQuestion;

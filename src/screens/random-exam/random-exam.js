@@ -1,14 +1,15 @@
-import NavigationBar from 'components/navigation-bar';
-import { SafeAreaView } from 'react-native';
+import TakeExam from 'components/take-exam';
 import { useRecoilValue } from 'recoil';
 import { selectedLicenseAtom } from 'state-management/selected-license';
+import { questionListTakeExam } from '../../data-test';
 
 const RandomExam = () => {
   const selectedLisence = useRecoilValue(selectedLicenseAtom);
   return (
-    <SafeAreaView>
-      <NavigationBar title={`Đề thi ngẫu nhiên Bằng ${selectedLisence}`} />
-    </SafeAreaView>
+    <TakeExam
+      title={`Đề thi ngẫu nhiên Bằng ${selectedLisence}`}
+      questionList={questionListTakeExam}
+    />
   );
 };
 

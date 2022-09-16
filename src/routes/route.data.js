@@ -5,8 +5,10 @@ import SelectLicense from 'screens/select-license';
 import TrafficSignDetail from 'screens/traffic-sign-detail';
 import TrafficSigns from 'screens/traffic-signs';
 import WeakPoint from 'screens/weak-point';
+import SeeWrongQuestion from '../screens/see-wrong-question';
 import TakeExamDetail from '../screens/take-exam-detail';
 import TakeExamList from '../screens/take-exam-list';
+import WrongQuestion from '../screens/wrong-question';
 
 export const HOME_ROUTES = [
   {
@@ -28,6 +30,14 @@ export const HOME_ROUTES = [
   {
     name: 'TakeExamDetail',
     component: TakeExamDetail,
+  },
+  {
+    name: 'SeeWrongQuestion',
+    component: SeeWrongQuestion,
+  },
+  {
+    name: 'WrongQuestion',
+    component: WrongQuestion,
   },
 ];
 
