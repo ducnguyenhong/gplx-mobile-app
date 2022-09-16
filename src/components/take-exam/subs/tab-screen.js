@@ -14,7 +14,7 @@ const TabScreen = ({ questionList, readOnly }) => {
       <View style={{ flex: 1 }}>
         <Question data={currentQuestion} readOnly={readOnly} />
       </View>
-      {!readOnly && (
+      {readOnly && (
         <CollapseList
           questionList={questionList}
           currentQuestionIndex={tabIndex}
