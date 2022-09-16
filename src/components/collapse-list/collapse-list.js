@@ -5,11 +5,8 @@ import Collapsible from 'react-native-collapsible';
 import Fa5Icon from 'react-native-vector-icons/FontAwesome5';
 import { styles } from './collapse-list.style';
 
-const CollapseList = ({
-  questionList,
-  onSelectQuestion,
-  currentQuestionIndex,
-}) => {
+const CollapseList = props => {
+  const { questionList, onSelectQuestion, currentQuestionIndex } = props;
   const [showList, setShowList] = useState(false);
 
   const onSelect = useCallback(
@@ -78,13 +75,13 @@ const CollapseList = ({
             key={'_'}
             data={questionList}
             numColumns={6}
-            keyExtractor={item => `${item.key}`}
+            keyExtractor={item => `${item.id}`}
             renderItem={({ item, index }) => (
               <TouchableOpacity
-                onPress={() => onSelect(item.key, index)}
+                onPress={() => onSelect(item.id, index)}
                 activeOpacity={0.8}
                 style={styles.toQuestionItem}>
-                <Text style={styles.tQuestionItem}>{item.key}</Text>
+                <Text style={styles.tQuestionItem}>{item.id}</Text>
               </TouchableOpacity>
             )}
           />

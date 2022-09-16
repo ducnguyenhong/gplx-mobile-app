@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import NavigationBar from 'components/navigation-bar';
 import Text from 'components/text';
 import { FlatList, SafeAreaView, TouchableOpacity } from 'react-native';
@@ -8,6 +9,7 @@ import { EXAM_LIST } from './take-exam-list.data';
 
 const TakeExamList = () => {
   const selectedLicense = useRecoilValue(selectedLicenseAtom);
+  const navigation = useNavigation();
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#d9d9d9' }}>
@@ -18,6 +20,7 @@ const TakeExamList = () => {
         numColumns={3}
         renderItem={({ item }) => (
           <TouchableOpacity
+            onPress={() => navigation.navigate('TakeExamDetail')}
             activeOpacity={0.8}
             style={{
               alignItems: 'center',
@@ -41,6 +44,7 @@ const TakeExamList = () => {
                 fontSize: 25,
                 fontWeight: '600',
                 marginTop: 10,
+                color: '#4d4d4d',
               }}>
               {item.value}
             </Text>

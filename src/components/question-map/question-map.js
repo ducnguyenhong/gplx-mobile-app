@@ -38,7 +38,7 @@ const QuestionMap = ({ questionList, currentQuestionIndex }) => {
           <FlatList
             data={questionList}
             key="_"
-            keyExtractor={item => `${item.key}`}
+            keyExtractor={item => `${item.id}`}
             numColumns={Math.round(questionList.length / 2)}
             renderItem={({ index }) => (
               <View
@@ -54,7 +54,7 @@ const QuestionMap = ({ questionList, currentQuestionIndex }) => {
         </View>
 
         <Text style={styles.tQuestion}>
-          {1}/{questionList.length}
+          {currentQuestionIndex}/{questionList.length}
         </Text>
       </View>
 

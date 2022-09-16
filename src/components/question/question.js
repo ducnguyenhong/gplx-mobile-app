@@ -21,19 +21,18 @@ const getCheckBoxIcon = (index, selectedAnswer, correctAnswer) => {
     : 'checkbox-blank-circle-outline';
 };
 
-const Question = ({ data }) => {
-  const { question, answers, defaultData } = data;
+const Question = ({ data, readOnly }) => {
+  const { question, answers, correctAnswer, explainAnswer } = data;
   const [selectedAnswer, setSelectedAnswer] = useState();
-  const { correctAnswer, explainAnswer } = defaultData || {};
 
   const onSelectAnswer = useCallback(
     index => {
-      if (defaultData) {
+      if (readOnly) {
         return;
       }
       setSelectedAnswer(index !== selectedAnswer ? index : undefined);
     },
-    [selectedAnswer, defaultData],
+    [selectedAnswer, readOnly],
   );
 
   return (
@@ -46,8 +45,8 @@ const Question = ({ data }) => {
         renderItem={({ item, index }) => (
           <TouchableHighlight
             style={styles.toAnswer}
-            underlayColor={defaultData ? '#FFF' : '#F0F0F5'}
-            activeOpacity={defaultData ? 1 : 0.8}
+            underlayColor={readOnly ? '#FFF' : '#F0F0F5'}
+            activeOpacity={readOnly ? 1 : 0.8}
             onPress={() => onSelectAnswer(index)}>
             {/* check-circle */}
             <View style={styles.vAnswer}>

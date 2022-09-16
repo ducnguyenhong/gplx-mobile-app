@@ -5,6 +5,7 @@ import SelectLicense from 'screens/select-license';
 import TrafficSignDetail from 'screens/traffic-sign-detail';
 import TrafficSigns from 'screens/traffic-signs';
 import WeakPoint from 'screens/weak-point';
+import TakeExamDetail from '../screens/take-exam-detail';
 import TakeExamList from '../screens/take-exam-list';
 
 export const HOME_ROUTES = [
@@ -23,6 +24,10 @@ export const HOME_ROUTES = [
   {
     name: 'TakeExamList',
     component: TakeExamList,
+  },
+  {
+    name: 'TakeExamDetail',
+    component: TakeExamDetail,
   },
 ];
 
