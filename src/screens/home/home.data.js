@@ -15,7 +15,7 @@ export const HOME_MENU = [
     title: 'Thi theo bộ đề',
     icon: <MaterialIcon name="collections-bookmark" size={32} color="#FFF" />,
     bgColor: '#FF3234',
-    route: 'ExamByTopic',
+    route: 'TakeExamList',
   },
   {
     title: 'Xem câu bị sai',
