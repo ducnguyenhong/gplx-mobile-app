@@ -42,7 +42,6 @@ export const styles = StyleSheet.create({
   },
 
   vQuestionList: {
-    padding: 3,
     backgroundColor: '#F2F2F2',
   },
 
