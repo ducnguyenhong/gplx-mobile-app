@@ -1,4 +1,5 @@
 import Home from 'screens/home';
+import RandomExam from 'screens/random-exam';
 import ReviewQuestion from 'screens/review-question';
 import SelectLicense from 'screens/select-license';
 import TrafficSignDetail from 'screens/traffic-sign-detail';
@@ -13,6 +14,10 @@ export const HOME_ROUTES = [
   {
     name: 'SelectLicense',
     component: SelectLicense,
+  },
+  {
+    name: 'RandomExam',
+    component: RandomExam,
   },
 ];
 

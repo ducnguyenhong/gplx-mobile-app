@@ -1,5 +1,8 @@
-import { useState } from 'react';
-import { SafeAreaView, useWindowDimensions } from 'react-native';
+import NavigationBar from 'components/navigation-bar';
+import QuestionMap from 'components/question-map/question-map';
+import { useCallback, useState } from 'react';
+import { SafeAreaView, useWindowDimensions, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import {
   SceneMap,
   TabBar,
@@ -7,9 +10,12 @@ import {
   TabBarItem,
   TabView
 } from 'react-native-tab-view';
+import Ionicon from 'react-native-vector-icons/Ionicons';
+import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useRecoilState } from 'recoil';
 import { selectedSentenceAtom } from './recoil/selected-sentence';
 import TabScreen from './subs/tab-screen';
+import { styles } from './weak-point.style';
 
 const questionList = [
   { key: 17, title: 'CÂU 17' },
@@ -36,12 +42,34 @@ const renderScene = SceneMap({
 // 60 Câu hỏi điểm liệt
 const WeakPoint = () => {
   const layout = useWindowDimensions();
-
   const [activeTab, setActiveTab] = useRecoilState(selectedSentenceAtom);
   const [routes] = useState(questionList);
 
+  const onReport = useCallback(() => {}, []);
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
+      <NavigationBar
+        title="60 câu hỏi điểm liệt"
+        NavigationRight={
+          <View style={styles.vNavRight}>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              style={styles.toEmoji}
+              onPress={onReport}>
+              <MCIcon name="emoticon-sad-outline" color="#FFF" size={23} />
+            </TouchableOpacity>
+
+            <TouchableOpacity activeOpacity={0.8}>
+              <Ionicon name="search" color="#FFF" size={23} />
+            </TouchableOpacity>
+          </View>
+        }
+      />
+      <QuestionMap
+        questionList={questionList}
+        currentQuestionIndex={activeTab}
+      />
       <TabView
         navigationState={{ index: activeTab, routes }}
         renderScene={renderScene}

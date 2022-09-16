@@ -9,13 +9,13 @@ export const HOME_MENU = [
     title: 'Đề ngẫu nhiên',
     icon: <Ionicon name="infinite" size={38} color="#FFF" />,
     bgColor: '#FFA101',
-    route: 'RandomTopic',
+    route: 'RandomExam',
   },
   {
     title: 'Thi theo bộ đề',
     icon: <MaterialIcon name="collections-bookmark" size={32} color="#FFF" />,
     bgColor: '#FF3234',
-    route: 'ExamTopic',
+    route: 'ExamByTopic',
   },
   {
     title: 'Xem câu bị sai',
