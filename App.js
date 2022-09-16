@@ -3,7 +3,8 @@ import Text from 'components/text';
 import dayjs from 'dayjs';
 import 'dayjs/locale/vi';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
+import { LogBox } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { RecoilRoot } from 'recoil';
@@ -22,6 +23,10 @@ const queryClient = new QueryClient({
 });
 
 const App = () => {
+  useEffect(() => {
+    LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+  }, []);
+
   return (
     // <StrictMode>
     <Suspense fallback={<Text>Loading screen...</Text>}>

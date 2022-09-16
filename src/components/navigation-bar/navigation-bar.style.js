@@ -38,7 +38,7 @@ export const styles = StyleSheet.create({
 
   tTitle: {
     color: '#FFF',
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: '600',
     // fontFamily: 'Averta-Semibold',
   },

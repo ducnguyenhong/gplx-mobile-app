@@ -9,13 +9,13 @@ export const HOME_MENU = [
     title: 'Đề ngẫu nhiên',
     icon: <Ionicon name="infinite" size={38} color="#FFF" />,
     bgColor: '#FFA101',
-    route: 'RandomTopic',
+    route: 'RandomExam',
   },
   {
     title: 'Thi theo bộ đề',
     icon: <MaterialIcon name="collections-bookmark" size={32} color="#FFF" />,
     bgColor: '#FF3234',
-    route: 'ExamTopic',
+    route: 'TakeExamList',
   },
   {
     title: 'Xem câu bị sai',
@@ -45,7 +45,7 @@ export const HOME_MENU = [
     title: '60 câu điểm liệt',
     icon: <Octicon name="shield-check" size={32} color="#FFF" />,
     bgColor: '#795549',
-    route: 'WeakPoints',
+    route: 'WeakPoint',
   },
   {
     title: 'Top 50 câu sai',

@@ -1,8 +1,14 @@
 import Home from 'screens/home';
+import RandomExam from 'screens/random-exam';
 import ReviewQuestion from 'screens/review-question';
 import SelectLicense from 'screens/select-license';
 import TrafficSignDetail from 'screens/traffic-sign-detail';
 import TrafficSigns from 'screens/traffic-signs';
+import WeakPoint from 'screens/weak-point';
+import SeeWrongQuestion from '../screens/see-wrong-question';
+import TakeExamDetail from '../screens/take-exam-detail';
+import TakeExamList from '../screens/take-exam-list';
+import WrongQuestion from '../screens/wrong-question';
 import MemorizationTips from '../screens/memorization-tips';
 
 export const HOME_ROUTES = [
@@ -13,6 +19,26 @@ export const HOME_ROUTES = [
   {
     name: 'SelectLicense',
     component: SelectLicense,
+  },
+  {
+    name: 'RandomExam',
+    component: RandomExam,
+  },
+  {
+    name: 'TakeExamList',
+    component: TakeExamList,
+  },
+  {
+    name: 'TakeExamDetail',
+    component: TakeExamDetail,
+  },
+  {
+    name: 'SeeWrongQuestion',
+    component: SeeWrongQuestion,
+  },
+  {
+    name: 'WrongQuestion',
+    component: WrongQuestion,
   },
 ];
 
@@ -33,6 +59,13 @@ export const REVIEW_QUESTION_ROUTES = [
   {
     name: 'ReviewQuestion',
     component: ReviewQuestion,
+  },
+];
+
+export const WEAKPOINT_ROUTES = [
+  {
+    name: 'WeakPoint',
+    component: WeakPoint,
   },
 ];
 
