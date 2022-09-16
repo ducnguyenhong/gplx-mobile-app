@@ -6,7 +6,24 @@ import { styles } from './review-question.style';
 
 const testData = {
   question: 'Câu hỏi Câu hỏi Câu hỏi Câu hỏi Câu hỏi Câu hỏi Câu hỏi',
-  answers: ['1. Dap an 1', '2. Dap an 2', '3. Dap an 3'],
+  answers: [
+    {
+      content: 'Dap an A',
+      value: 1,
+    },
+    {
+      content: 'Dap an B',
+      value: 2,
+    },
+    {
+      content: 'Dap an C',
+      value: 3,
+    },
+    {
+      content: 'Dap an D',
+      value: 4,
+    },
+  ],
 };
 
 const ReviewQuestion = () => {

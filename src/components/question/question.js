@@ -5,14 +5,17 @@ import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { styles } from './question.style';
 
 const Question = ({ data }) => {
-  const { question, answers, readOnly } = data;
+  const { question, answers, readOnly, correctAnswer } = data;
   const [selectedAnswer, setSelectedAnswer] = useState();
 
   const onSelectAnswer = useCallback(
     index => {
+      if (readOnly) {
+        return;
+      }
       setSelectedAnswer(index !== selectedAnswer ? index : undefined);
     },
-    [selectedAnswer],
+    [selectedAnswer, readOnly],
   );
 
   return (
@@ -25,8 +28,8 @@ const Question = ({ data }) => {
         renderItem={({ item, index }) => (
           <TouchableHighlight
             style={styles.toAnswer}
-            underlayColor="#F0F0F5"
-            activeOpacity={0.8}
+            underlayColor={readOnly ? '#FFF' : '#F0F0F5'}
+            activeOpacity={readOnly ? 1 : 0.8}
             onPress={() => onSelectAnswer(index)}>
             {/* check-circle */}
             <View style={styles.vAnswer}>
@@ -39,7 +42,7 @@ const Question = ({ data }) => {
                 size={25}
                 color={index === selectedAnswer ? 'orange' : 'gray'}
               />
-              <Text style={styles.tAnswer}>{item}</Text>
+              <Text style={styles.tAnswer}>{item.content}</Text>
             </View>
           </TouchableHighlight>
         )}
