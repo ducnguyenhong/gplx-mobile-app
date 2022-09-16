@@ -1,6 +1,7 @@
 import Text from 'components/text';
 import { memo, useEffect, useState } from 'react';
 import { FlatList, View } from 'react-native';
+import { styles } from './question-map.style';
 
 const getMapBgColor = (index, currentQuestionIndex) => {
   if (currentQuestionIndex === index) {
@@ -27,62 +28,39 @@ const QuestionMap = ({ questionList, currentQuestionIndex }) => {
         }
       }
     }, 1000);
-    return () => {
-      clearInterval(myInterval);
-    };
+    return () => clearInterval(myInterval);
   });
 
   return (
-    <View style={{ backgroundColor: '#1687CB', padding: 6 }}>
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            flex: 1,
-            justifyContent: 'flex-start',
-          }}>
-          <View>
-            <FlatList
-              data={questionList}
-              key="_"
-              keyExtractor={item => `${item.key}`}
-              numColumns={Math.round(questionList.length / 2)}
-              renderItem={({ item, index }) => (
-                <View
-                  style={{
-                    width: 9,
-                    height: 9,
+    <View style={styles.vMain}>
+      <View style={styles.vLeft}>
+        <View>
+          <FlatList
+            data={questionList}
+            key="_"
+            keyExtractor={item => `${item.key}`}
+            numColumns={Math.round(questionList.length / 2)}
+            renderItem={({ index }) => (
+              <View
+                style={[
+                  styles.vItem,
+                  {
                     backgroundColor: getMapBgColor(index, currentQuestionIndex),
-                    marginRight: 4,
-                    marginBottom: 4,
-                  }}
-                />
-              )}
-            />
-          </View>
-
-          <Text
-            style={{
-              fontSize: 20,
-              fontWeight: '600',
-              color: '#FFF',
-              marginLeft: 5,
-              marginTop: -5,
-            }}>
-            {1}/{questionList.length}
-          </Text>
+                  },
+                ]}
+              />
+            )}
+          />
         </View>
 
-        <Text
-          style={{
-            fontSize: 20,
-            fontWeight: '600',
-            color: '#FFF',
-          }}>
-          {minutes}:{seconds}
+        <Text style={styles.tQuestion}>
+          {1}/{questionList.length}
         </Text>
       </View>
+
+      <Text style={styles.tTime}>
+        {minutes}:{`${seconds}`.length === 2 ? seconds : `0${seconds}`}
+      </Text>
     </View>
   );
 };
