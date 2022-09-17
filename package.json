@@ -23,6 +23,7 @@
     "react-native": "0.70.0",
     "react-native-cli": "^2.0.1",
     "react-native-collapsible": "^1.6.0",
+    "react-native-drawer": "^2.5.1",
     "react-native-fast-image": "^8.5.11",
     "react-native-gesture-handler": "^2.5.0",
     "react-native-modal": "^13.0.1",
