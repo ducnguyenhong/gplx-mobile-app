@@ -1,5 +1,5 @@
 import TakeExam from 'components/take-exam';
-import { questionListStudy } from '../../data-test';
+import { questionListTakeExam } from '../../data-test';
 
 const WeakPoint = () => {
   return (
@@ -7,7 +7,7 @@ const WeakPoint = () => {
       examKey="WEAK_POINT"
       readOnly
       title="60 câu hỏi điểm liệt"
-      questionList={questionListStudy}
+      questionList={questionListTakeExam}
     />
   );
 };

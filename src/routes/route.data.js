@@ -5,11 +5,12 @@ import SelectLicense from 'screens/select-license';
 import TrafficSignDetail from 'screens/traffic-sign-detail';
 import TrafficSigns from 'screens/traffic-signs';
 import WeakPoint from 'screens/weak-point';
+import MemorizationTips from '../screens/memorization-tips';
+import ResultExam from '../screens/result-exam';
 import SeeWrongQuestion from '../screens/see-wrong-question';
 import TakeExamDetail from '../screens/take-exam-detail';
 import TakeExamList from '../screens/take-exam-list';
 import WrongQuestion from '../screens/wrong-question';
-import MemorizationTips from '../screens/memorization-tips';
 
 export const HOME_ROUTES = [
   {
@@ -40,6 +41,10 @@ export const HOME_ROUTES = [
     name: 'WrongQuestion',
     component: WrongQuestion,
   },
+  {
+    name: 'ResultExam',
+    component: ResultExam,
+  },
 ];
 
 // ví dụ màn Home có ô Các biển báo, thì tất cả các screen nằm trong đấy sẽ khai báo ở đây
@@ -69,12 +74,10 @@ export const WEAKPOINT_ROUTES = [
   },
 ];
 
-// ví dụ màn Home có ô Mẹo ghi nhớ, thì tất cả các screen nằm trong đấy sẽ khai báo ở đây   
+// ví dụ màn Home có ô Mẹo ghi nhớ, thì tất cả các screen nằm trong đấy sẽ khai báo ở đây
 export const MEMORIZATION_TIPS = [
   {
     name: 'MemorizationTips',
     component: MemorizationTips,
   },
 ];
-
-

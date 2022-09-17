@@ -1,5 +1,5 @@
 import TakeExam from 'components/take-exam';
-import { questionListStudy } from '../../data-test';
+import { questionListTakeExam } from '../../data-test';
 
 const SeeWrongQuestion = () => {
   return (
@@ -7,7 +7,7 @@ const SeeWrongQuestion = () => {
       examKey="SEE_WRONG"
       readOnly
       title="Câu hỏi sai nhiều"
-      questionList={questionListStudy}
+      questionList={questionListTakeExam}
     />
   );
 };

@@ -3,8 +3,9 @@ import NavigationBar from 'components/navigation-bar';
 import QuestionMap from 'components/question-map/question-map';
 import TextInput from 'components/text-input';
 import isEmpty from 'lodash/isEmpty';
-import { memo, useEffect, useMemo, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
+  Alert,
   SafeAreaView,
   TouchableOpacity,
   useWindowDimensions,
@@ -59,6 +60,27 @@ const TakeExam = props => {
     [questionList, readOnly, examKey],
   );
 
+  const onSubmitExam = useCallback(() => {
+    Alert.alert('Kết thúc bài thi', 'Bài thi sẽ được kết thúc và chấm điểm', [
+      {
+        text: 'TIẾP TỤC',
+        style: 'cancel',
+      },
+      {
+        text: 'KẾT THÚC',
+        onPress: () => navigation.navigate('ResultExam', { examKey, title }),
+      },
+    ]);
+  }, [examKey, navigation, title]);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('beforeRemove', e => {
+      e.preventDefault();
+      unsubscribe();
+      onSubmitExam();
+    });
+  }, [navigation, onSubmitExam]);
+
   useEffect(() => {
     if (isEmpty(statusSentenceAtom)) {
       setStatusSentences(() =>
@@ -108,7 +130,7 @@ const TakeExam = props => {
             {!readOnly && (
               <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={() => {}}
+                onPress={onSubmitExam}
                 style={styles.toSearch}>
                 <Ionicon name="checkmark-done" color="#FFF" size={25} />
               </TouchableOpacity>
@@ -129,6 +151,16 @@ const TakeExam = props => {
               />
             </View>
           ) : undefined
+        }
+        NavigationLeft={
+          readOnly ? undefined : (
+            <TouchableOpacity
+              onPress={() => {}}
+              activeOpacity={0.8}
+              style={{ paddingHorizontal: 13 }}>
+              <MCIcon name="format-list-bulleted" color="#FFF" size={26} />
+            </TouchableOpacity>
+          )
         }
       />
       {!readOnly && (
