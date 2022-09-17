@@ -1,8 +1,9 @@
 import NavigationBar from 'components/navigation-bar';
 import Question from 'components/question';
 import Text from 'components/text';
-import { SafeAreaView, View } from 'react-native';
+import { Dimensions, FlatList, SafeAreaView, TouchableOpacity, View } from 'react-native';
 import { styles } from './review-question.style';
+import { Bar } from 'react-native-progress'
 
 const testData = {
   question: 'Câu hỏi Câu hỏi Câu hỏi Câu hỏi Câu hỏi Câu hỏi Câu hỏi',
@@ -26,14 +27,60 @@ const testData = {
   ],
 };
 
+
+const DATA = [
+  {
+    title: 'Toàn bộ câu hỏi trong bộ đề thi',
+    description: "Toàn bộ 200 câu hỏi gồm 20 câu điểm liệt",
+    total: 200,
+    done: 11
+  },
+  {
+    title: 'Toàn bộ câu hỏi trong bộ đề thi',
+    description: "Toàn bộ 200 câu hỏi gồm 20 câu điểm liệt",
+    total: 200,
+    done: 100
+  },
+  {
+    title: 'Toàn bộ câu hỏi trong bộ đề thi',
+    description: "Toàn bộ 200 câu hỏi gồm 20 câu điểm liệt",
+    total: 200,
+    done: 1
+  },
+  {
+    title: 'Toàn bộ câu hỏi trong bộ đề thi',
+    description: "Toàn bộ 200 câu hỏi gồm 20 câu điểm liệt",
+    total: 200,
+    done: 0
+  }
+];
+
 const ReviewQuestion = () => {
+
+  const widthProgress = Dimensions.get("window").width * 0.7
+
   return (
     <SafeAreaView style={styles.savMain}>
       <NavigationBar title="Ôn tập các câu hỏi" />
-      <View>
-        <Text>Màn Ôn tập các câu hỏi</Text>
-      </View>
-      <Question data={testData} />
+      <FlatList
+        data={DATA}
+        keyExtractor={(item, index) => `${item + index}`}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => alert(1)}>
+            <View style={styles.reviewItem}>
+              <Text style={styles.itemHeader}>{item.title}</Text>
+              <Text style={styles.itemDescription}>{item.description}</Text>
+              <View style={styles.itemProgress}>
+                <Bar progress={item.done / item.total} width={widthProgress} height={8} color="#2ecc71" unfilledColor="#ccc" borderColor='#ccc' style={{ height: 8 }} />
+                <Text style={styles.itemCount}>{item.done} / {item.total}</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        )}
+      />
+      {/* <Question data={testData} /> */}
     </SafeAreaView>
   );
 };
