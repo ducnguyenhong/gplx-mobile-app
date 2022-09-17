@@ -36,7 +36,7 @@ const SelectLicense = () => {
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => (
           <TouchableHighlight
-            underlayColor="#2cce72"
+            underlayColor="#F0F0F5"
             style={[
               styles.thItem,
               {

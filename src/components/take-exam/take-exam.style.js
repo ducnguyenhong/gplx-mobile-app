@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  toEmoji: {
-    marginRight: 20,
+  toSearch: {
+    marginLeft: 20,
   },
 });

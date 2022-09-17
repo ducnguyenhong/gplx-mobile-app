@@ -1,9 +1,12 @@
+import { useNavigation } from '@react-navigation/native';
 import NavigationBar from 'components/navigation-bar';
 import QuestionMap from 'components/question-map/question-map';
+import TextInput from 'components/text-input';
 import isEmpty from 'lodash/isEmpty';
-import { memo, useEffect, useMemo, useRef } from 'react';
+import { memo, useEffect, useMemo, useRef, useState } from 'react';
 import {
-  SafeAreaView, TouchableOpacity,
+  SafeAreaView,
+  TouchableOpacity,
   useWindowDimensions,
   View
 } from 'react-native';
@@ -39,6 +42,8 @@ const TakeExam = props => {
   const resetStatusSentences = useResetRecoilState(statusSentenceAtom(examKey));
   const setStatusSentences = useSetRecoilState(statusSentenceAtom(examKey));
   const modalReportRef = useRef();
+  const [activeFuncSearch, setActiveFuncSearch] = useState(false);
+  const navigation = useNavigation();
 
   const routes = useMemo(
     () =>
@@ -75,26 +80,55 @@ const TakeExam = props => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <NavigationBar
+        onPressGoBack={() => {
+          if (activeFuncSearch) {
+            setActiveFuncSearch(false);
+            return;
+          }
+          navigation.goBack();
+        }}
         title={title}
         NavigationRight={
           <View style={styles.vNavRight}>
             <TouchableOpacity
               activeOpacity={0.8}
-              style={styles.toEmoji}
               onPress={() => modalReportRef.current?.showModal()}>
               <MCIcon name="emoticon-sad-outline" color="#FFF" size={23} />
             </TouchableOpacity>
 
-            <TouchableOpacity activeOpacity={0.8}>
-              <Ionicon
-                name={readOnly ? 'search' : 'checkmark-done'}
-                color="#FFF"
-                size={readOnly ? 23 : 25}
-              />
-            </TouchableOpacity>
+            {readOnly && !activeFuncSearch && (
+              <TouchableOpacity
+                style={styles.toSearch}
+                activeOpacity={0.8}
+                onPress={() => setActiveFuncSearch(true)}>
+                <Ionicon name="search" color="#FFF" size={23} />
+              </TouchableOpacity>
+            )}
+
+            {!readOnly && (
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => {}}
+                style={styles.toSearch}>
+                <Ionicon name="checkmark-done" color="#FFF" size={25} />
+              </TouchableOpacity>
+            )}
 
             <ModalReport ref={modalReportRef} />
           </View>
+        }
+        NavigationCenter={
+          activeFuncSearch ? (
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Ionicon name="search" color="#FFF" size={23} />
+              <TextInput
+                autoFocus
+                placeholderTextColor="#FFF"
+                placeholder="Tìm kiếm câu hỏi"
+                style={{ color: '#FFF', marginLeft: 10, fontSize: 18 }}
+              />
+            </View>
+          ) : undefined
         }
       />
       {!readOnly && (

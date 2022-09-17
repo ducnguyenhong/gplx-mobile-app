@@ -13,8 +13,8 @@ export const styles = StyleSheet.create({
 
   toMenuItem: {
     marginBottom: 10,
-    height: (windowHeight * 20) / 100,
-    width: '47%',
+    height: (windowHeight * 21.1) / 100,
+    width: '47.5%',
     marginHorizontal: 5,
     alignItems: 'center',
     justifyContent: 'center',
