@@ -3,53 +3,36 @@ import { memo, useCallback, useState } from 'react';
 import { FlatList, TouchableHighlight, View } from 'react-native';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useRecoilValue } from 'recoil';
+import { checkedAnswerAtom } from '../take-exam/recoil/checked-answer';
 import { statusSentenceAtom } from '../take-exam/recoil/status-sentence';
+import {
+  getCheckBoxColor,
+  getCheckBoxIcon,
+  getTextAnswerStyle
+} from './question.helper';
 import { styles } from './question.style';
 
-const getCheckBoxColor = (index, selectedAnswer, correctAnswer, status) => {
-  if (status === false) {
-    return 'red';
-  }
-  if ((correctAnswer && correctAnswer === index) || status) {
-    return 'green';
-  }
-  return index === selectedAnswer ? 'orange' : 'gray';
-};
-
-const getCheckBoxIcon = (index, selectedAnswer, correctAnswer, status) => {
-  if (correctAnswer && correctAnswer === index) {
-    return 'check-circle';
-  }
-
-  return index === selectedAnswer
-    ? 'check-circle'
-    : 'checkbox-blank-circle-outline';
-};
-
 const Question = props => {
-  const { data, readOnly, getCurrentAnswer, status, examKey } = props;
-  const {
-    question,
-    answers,
-    correctAnswer,
-    correctAnswerWhenCheck,
-    explainAnswer,
-  } = data;
+  const { data, readOnly, getCurrentAnswer, examKey } = props;
+  const { question, answers, correctAnswer, explainAnswer } = data;
   const [selectedAnswer, setSelectedAnswer] = useState();
   const statusSentences = useRecoilValue(statusSentenceAtom(examKey));
-
   const checkStatus = statusSentences.find(item => item.id === data.id);
+  const isChooseCorrect = checkStatus?.status;
+  const checkedAnswer = useRecoilValue(
+    checkedAnswerAtom(`${examKey}_${data.id}`),
+  );
 
   const onSelectAnswer = useCallback(
     (item, index) => {
-      if (readOnly) {
+      if (readOnly || checkedAnswer) {
         return;
       }
       getCurrentAnswer && getCurrentAnswer(item, index, data.id);
 
       setSelectedAnswer(index !== selectedAnswer ? index : undefined);
     },
-    [readOnly, getCurrentAnswer, data.id, selectedAnswer],
+    [readOnly, getCurrentAnswer, data.id, selectedAnswer, checkedAnswer],
   );
 
   return (
@@ -72,22 +55,30 @@ const Question = props => {
                   index,
                   selectedAnswer,
                   correctAnswer,
-                  status,
+                  isChooseCorrect,
+                  readOnly,
                 )}
                 size={25}
                 color={getCheckBoxColor(
                   index,
                   selectedAnswer,
                   correctAnswer,
-                  status,
+                  isChooseCorrect,
+                  readOnly,
                 )}
               />
               <Text
-                style={
-                  correctAnswer && correctAnswer === index
-                    ? styles.tAnswerCorrect
-                    : styles.tAnswer
-                }>
+                style={getTextAnswerStyle(
+                  styles.tAnswer,
+                  styles.tAnswerCorrect,
+                  styles.tAnswerWrong,
+                  correctAnswer,
+                  index,
+                  readOnly,
+                  isChooseCorrect,
+                  checkedAnswer,
+                  selectedAnswer,
+                )}>
                 {item.content}
               </Text>
             </View>
@@ -95,7 +86,8 @@ const Question = props => {
         )}
       />
 
-      {!!explainAnswer && (
+      {((!!explainAnswer && checkedAnswer) ||
+        (!!explainAnswer && readOnly)) && (
         <View style={styles.vExplain}>
           <View style={styles.vExplainLabel}>
             <MCIcon name="lightbulb-on" size={24} color="red" />

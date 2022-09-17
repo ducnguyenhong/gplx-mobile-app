@@ -1,12 +1,14 @@
 import CollapseList from 'components/collapse-list';
 import Question from 'components/question';
 import Text from 'components/text';
-import { memo, useCallback, useState } from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
 import { SafeAreaView, TouchableOpacity, View } from 'react-native';
 import Ionicon from 'react-native-vector-icons/Ionicons';
-import { useRecoilState, useSetRecoilState } from 'recoil';
-import { indexSentenceAtom } from '../recoil/index-sentence';
-import { statusSentenceAtom } from '../recoil/status-sentence';
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
+import { checkedAnswerAtom } from '../../recoil/checked-answer';
+import { indexSentenceAtom } from '../../recoil/index-sentence';
+import { statusSentenceAtom } from '../../recoil/status-sentence';
+import { styles } from './tab-screen.style';
 
 const TabScreen = ({ questionList, readOnly, examKey }) => {
   const [tabIndex, setTabIndex] = useRecoilState(indexSentenceAtom);
@@ -15,6 +17,12 @@ const TabScreen = ({ questionList, readOnly, examKey }) => {
   const [answered, setAnswered] = useState();
   const [answereduestionIndex, setAnsweredQuestionIndex] = useState();
   const setStatusSentences = useSetRecoilState(statusSentenceAtom(examKey));
+  const [checkedAnswer, setCheckedAnswer] = useRecoilState(
+    checkedAnswerAtom(`${examKey}_${currentQuestion.id}`),
+  );
+  const resetCheckedAnswer = useResetRecoilState(
+    checkedAnswerAtom(`${examKey}_${currentQuestion.id}`),
+  );
 
   const getCurrentAnswer = useCallback((item, index, questionIndex) => {
     if (typeof index === 'number') {
@@ -26,12 +34,13 @@ const TabScreen = ({ questionList, readOnly, examKey }) => {
 
   const onCheckAnswer = useCallback(() => {
     if (answered) {
+      setCheckedAnswer(true);
       setStatusSentences(prev =>
         prev.map(item => {
           if (item.id === answereduestionIndex) {
             return {
               id: item.id,
-              status: currentQuestion.correctAnswerWhenCheck === answered.value,
+              status: currentQuestion.correctAnswer === answered.value,
             };
           }
           return item;
@@ -40,13 +49,20 @@ const TabScreen = ({ questionList, readOnly, examKey }) => {
     }
   }, [
     answered,
-    answereduestionIndex,
-    currentQuestion.correctAnswerWhenCheck,
+    setCheckedAnswer,
     setStatusSentences,
+    answereduestionIndex,
+    currentQuestion.correctAnswer,
   ]);
 
+  useEffect(() => {
+    return () => {
+      resetCheckedAnswer();
+    };
+  }, [resetCheckedAnswer]);
+
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#FFF' }}>
+    <SafeAreaView style={styles.savMain}>
       <View style={{ flex: 1 }}>
         <Question
           examKey={examKey}
@@ -63,41 +79,14 @@ const TabScreen = ({ questionList, readOnly, examKey }) => {
         />
       )}
 
-      {showButtonAnswer && (
+      {showButtonAnswer && !checkedAnswer && (
         <View style={{ alignItems: 'flex-end' }}>
           <TouchableOpacity
             onPress={onCheckAnswer}
             activeOpacity={0.8}
-            style={{
-              backgroundColor: '#06ac64',
-              flexDirection: 'row',
-              alignItems: 'center',
-              margin: 20,
-              paddingHorizontal: 15,
-              paddingVertical: 10,
-              borderRadius: 50,
-
-              shadowColor: '#000',
-              shadowOffset: {
-                width: 0,
-                height: 5,
-              },
-              shadowOpacity: 0.34,
-              shadowRadius: 6.27,
-
-              elevation: 10,
-            }}>
+            style={styles.toBtnCheckAnswer}>
             <Ionicon name="checkmark" color="#FFF" size={20} />
-            <Text
-              style={{
-                color: '#FFF',
-                textTransform: 'uppercase',
-                fontSize: 15,
-                fontWeight: '600',
-                marginLeft: 10,
-              }}>
-              Đáp án
-            </Text>
+            <Text style={styles.tBtnCheckAnswer}>Đáp án</Text>
           </TouchableOpacity>
         </View>
       )}

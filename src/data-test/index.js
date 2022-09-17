@@ -5,24 +5,23 @@ export const questionListTakeExam = Array.from(Array(20).keys()).map(item => ({
   answers: [
     {
       content: 'Đáp án A',
-      value: 1,
+      value: 0,
     },
     {
       content: 'Đáp án B',
-      value: 2,
+      value: 1,
     },
     {
       content: 'Đáp án C',
-      value: 3,
+      value: 2,
     },
     {
       content: 'Đáp án D',
-      value: 4,
+      value: 3,
     },
   ],
-  correctAnswer: '',
-  correctAnswerWhenCheck: 3,
-  explainAnswer: '',
+  correctAnswer: 2, // Câu C
+  explainAnswer: 'Giải thích đáp án này...',
 }));
 
 export const questionListStudy = Array.from(Array(20).keys()).map(item => ({
@@ -48,6 +47,5 @@ export const questionListStudy = Array.from(Array(20).keys()).map(item => ({
     },
   ],
   correctAnswer: Math.floor(Math.random() * (4 - 1 + 1) + 1),
-  correctAnswerWhenCheck: '',
   explainAnswer: 'Giải thích đáp án này...',
 }));

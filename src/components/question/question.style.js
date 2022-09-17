@@ -10,7 +10,8 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     borderBottomWidth: 1,
     borderColor: '#E6E6E6',
-    paddingVertical: 5,
+    paddingTop: 5,
+    paddingBottom: 10,
     marginTop: 5,
   },
 
@@ -31,6 +32,13 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     marginLeft: 5,
     color: 'green',
+    fontWeight: '600',
+  },
+
+  tAnswerWrong: {
+    fontSize: 16,
+    marginLeft: 5,
+    color: 'red',
     fontWeight: '600',
   },
 

@@ -7,7 +7,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { SceneMap, TabBar, TabView } from 'react-native-tab-view';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useRecoilState, useResetRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
 import { indexSentenceAtom } from './recoil/index-sentence';
 import { statusSentenceAtom } from './recoil/status-sentence';
 import TabScreen from './subs/tab-screen';
@@ -33,9 +33,7 @@ const TakeExam = props => {
   const [tabIndex, setTabIndex] = useRecoilState(indexSentenceAtom);
   const resetTabIndex = useResetRecoilState(indexSentenceAtom);
   const resetStatusSentences = useResetRecoilState(statusSentenceAtom(examKey));
-  const [statusSentences, setStatusSentences] = useRecoilState(
-    statusSentenceAtom(examKey),
-  );
+  const setStatusSentences = useSetRecoilState(statusSentenceAtom(examKey));
 
   const routes = useMemo(
     () =>
