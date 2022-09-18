@@ -23,7 +23,7 @@ import QuestionDrawer from './subs/question-drawer';
 import TabScreen from './subs/tab-screen';
 import { styles } from './take-exam.style';
 
-const getScenes = (readOnly, questionList, examKey) => {
+const getScenes = (readOnly, questionList, examKey, noMap) => {
   let scenes = {};
   questionList.forEach(item => {
     scenes[item.id] = () => (
@@ -31,6 +31,7 @@ const getScenes = (readOnly, questionList, examKey) => {
         questionList={questionList}
         readOnly={readOnly}
         examKey={examKey}
+        noMap={noMap}
       />
     );
   });
@@ -38,7 +39,7 @@ const getScenes = (readOnly, questionList, examKey) => {
 };
 
 const TakeExam = props => {
-  const { questionList, title, readOnly, examKey } = props;
+  const { questionList, title, readOnly, examKey, noMap } = props;
   const { width } = useWindowDimensions();
   const [tabIndex, setTabIndex] = useRecoilState(indexSentenceAtom);
   const resetTabIndex = useResetRecoilState(indexSentenceAtom);
@@ -59,8 +60,8 @@ const TakeExam = props => {
   );
 
   const renderScene = useMemo(
-    () => getScenes(readOnly, questionList, examKey),
-    [questionList, readOnly, examKey],
+    () => getScenes(readOnly, questionList, examKey, noMap),
+    [questionList, readOnly, examKey, noMap],
   );
 
   const onSubmitExam = useCallback(() => {
@@ -180,7 +181,7 @@ const TakeExam = props => {
             )
           }
         />
-        {!readOnly && (
+        {!readOnly && !noMap && (
           <QuestionMap
             examKey={examKey}
             questionList={questionList}

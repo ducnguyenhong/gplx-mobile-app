@@ -10,7 +10,7 @@ import { indexSentenceAtom } from '../../recoil/index-sentence';
 import { statusSentenceAtom } from '../../recoil/status-sentence';
 import { styles } from './tab-screen.style';
 
-const TabScreen = ({ questionList, readOnly, examKey }) => {
+const TabScreen = ({ questionList, readOnly, examKey, noMap }) => {
   const [tabIndex, setTabIndex] = useRecoilState(indexSentenceAtom);
   const currentQuestion = questionList.find(item => item.id === tabIndex);
   const [showButtonAnswer, setShowButtonAnswer] = useState(false);
@@ -71,14 +71,7 @@ const TabScreen = ({ questionList, readOnly, examKey }) => {
           getCurrentAnswer={getCurrentAnswer}
         />
       </View>
-      {readOnly && (
-        <CollapseList
-          questionList={questionList}
-          currentQuestionIndex={tabIndex}
-          onSelectQuestion={(tab, index) => setTabIndex(index)}
-        />
-      )}
-
+      
       {showButtonAnswer && !checkedAnswer && (
         <View style={{ alignItems: 'flex-end' }}>
           <TouchableOpacity
@@ -89,6 +82,13 @@ const TabScreen = ({ questionList, readOnly, examKey }) => {
             <Text style={styles.tBtnCheckAnswer}>Đáp án</Text>
           </TouchableOpacity>
         </View>
+      )}
+      {readOnly || noMap && (
+        <CollapseList
+          questionList={questionList}
+          currentQuestionIndex={tabIndex}
+          onSelectQuestion={(tab, index) => setTabIndex(index)}
+        />
       )}
     </SafeAreaView>
   );
