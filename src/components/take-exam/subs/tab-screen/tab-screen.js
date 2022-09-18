@@ -24,15 +24,18 @@ const TabScreen = ({ questionList, readOnly, examKey, noMap }) => {
     checkedAnswerAtom(`${examKey}_${currentQuestion.id}`),
   );
 
-  const getCurrentAnswer = useCallback((item, index, questionIndex) => {
-    if (typeof index === 'number') {
+  const getCurrentAnswer = useCallback((item, index, questionIndex, selectedAnswer) => {
+    if (typeof index === 'number' && selectedAnswer !== undefined) {
       setShowButtonAnswer(true);
+    } else {
+      setShowButtonAnswer(false);
     }
     setAnswered(item);
     setAnsweredQuestionIndex(questionIndex);
   }, []);
 
   const onCheckAnswer = useCallback(() => {
+    alert(JSON.stringify(answered))
     if (answered) {
       setCheckedAnswer(true);
       setStatusSentences(prev =>

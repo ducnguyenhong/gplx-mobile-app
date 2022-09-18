@@ -24,11 +24,11 @@ const Question = props => {
   );
 
   const onSelectAnswer = useCallback(
-    (item, index) => {
+    (item, index, selectedAnswer) => {
       if (readOnly || checkedAnswer) {
         return;
       }
-      getCurrentAnswer && getCurrentAnswer(item, index, data.id);
+      getCurrentAnswer && getCurrentAnswer(item, index, data.id, index !== selectedAnswer ? index : undefined);
 
       setSelectedAnswer(index !== selectedAnswer ? index : undefined);
     },
@@ -47,7 +47,7 @@ const Question = props => {
             style={styles.toAnswer}
             underlayColor={readOnly ? '#FFF' : '#F0F0F5'}
             activeOpacity={readOnly ? 1 : 0.8}
-            onPress={() => onSelectAnswer(item, index)}>
+            onPress={() => onSelectAnswer(item, index, selectedAnswer)}>
             {/* check-circle */}
             <View style={styles.vAnswer}>
               <MCIcon
