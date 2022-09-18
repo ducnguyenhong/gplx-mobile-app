@@ -81,7 +81,7 @@ const TakeExam = props => {
     const unsubscribe = navigation.addListener('beforeRemove', e => {
       e.preventDefault();
       unsubscribe();
-      onSubmitExam();
+      !noMap && !readOnly &&  onSubmitExam();
     });
   }, [navigation, onSubmitExam]);
 
@@ -135,8 +135,7 @@ const TakeExam = props => {
                 onPress={() => modalReportRef.current?.showModal()}>
                 <MCIcon name="emoticon-sad-outline" color="#FFF" size={23} />
               </TouchableOpacity>
-
-              {readOnly && !activeFuncSearch && (
+              {(readOnly || noMap) && !activeFuncSearch && (
                 <TouchableOpacity
                   style={styles.toSearch}
                   activeOpacity={0.8}
@@ -145,7 +144,7 @@ const TakeExam = props => {
                 </TouchableOpacity>
               )}
 
-              {!readOnly && (
+              {!readOnly && !noMap && (
                 <TouchableOpacity
                   activeOpacity={0.8}
                   onPress={onSubmitExam}
@@ -171,7 +170,7 @@ const TakeExam = props => {
             ) : undefined
           }
           NavigationLeft={
-            readOnly ? undefined : (
+            readOnly || noMap ? undefined : (
               <TouchableOpacity
                 onPress={() => drawerRef.current?.open()}
                 activeOpacity={0.8}
