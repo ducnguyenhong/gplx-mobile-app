@@ -23,7 +23,7 @@ const MemorizationTips = () => {
                 style={[styles.tipContainer, { paddingBottom: height }]}
                 sections={TIPS_DATA}
                 keyExtractor={(item, index) => `${item + index}`}
-                renderItem={({ item, section, index }) => (
+                renderItem={({ item, section }) => (
                     <View>
                         <Text style={styles.tipText}> { section.data.length > 1 && <Octicon name='dot-fill' size={12} />}   {item}</Text>
                     </View>

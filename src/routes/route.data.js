@@ -7,6 +7,7 @@ import TrafficSigns from 'screens/traffic-signs';
 import WeakPoint from 'screens/weak-point';
 import MemorizationTips from '../screens/memorization-tips';
 import ResultExam from '../screens/result-exam';
+import ReviewQuestionDetail from '../screens/review-question-detail';
 import SeeWrongQuestion from '../screens/see-wrong-question';
 import TakeExamDetail from '../screens/take-exam-detail';
 import TakeExamList from '../screens/take-exam-list';
@@ -65,6 +66,10 @@ export const REVIEW_QUESTION_ROUTES = [
     name: 'ReviewQuestion',
     component: ReviewQuestion,
   },
+  {
+    name: 'ReviewQuestionDetail',
+    component: ReviewQuestionDetail
+  }
 ];
 
 export const WEAKPOINT_ROUTES = [

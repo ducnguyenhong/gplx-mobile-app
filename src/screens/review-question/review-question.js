@@ -4,6 +4,7 @@ import Text from 'components/text';
 import { Dimensions, FlatList, SafeAreaView, TouchableOpacity, View } from 'react-native';
 import { styles } from './review-question.style';
 import { Bar } from 'react-native-progress'
+import { useNavigation } from '@react-navigation/native';
 
 const testData = {
   question: 'Câu hỏi Câu hỏi Câu hỏi Câu hỏi Câu hỏi Câu hỏi Câu hỏi',
@@ -57,6 +58,7 @@ const DATA = [
 
 const ReviewQuestion = () => {
 
+  const navigation = useNavigation()
   const widthProgress = Dimensions.get("window").width * 0.7
 
   return (
@@ -68,7 +70,7 @@ const ReviewQuestion = () => {
         renderItem={({ item }) => (
           <TouchableOpacity
             activeOpacity={0.8}
-            onPress={() => alert(1)}>
+            onPress={() => navigation.navigate('ReviewQuestionDetail', { id: item.done })}>
             <View style={styles.reviewItem}>
               <Text style={styles.itemHeader}>{item.title}</Text>
               <Text style={styles.itemDescription}>{item.description}</Text>
