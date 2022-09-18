@@ -35,7 +35,6 @@ const TabScreen = ({ questionList, readOnly, examKey, noMap }) => {
   }, []);
 
   const onCheckAnswer = useCallback(() => {
-    alert(JSON.stringify(answered))
     if (answered) {
       setCheckedAnswer(true);
       setStatusSentences(prev =>
