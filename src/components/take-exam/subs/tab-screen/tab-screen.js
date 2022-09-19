@@ -27,9 +27,11 @@ const TabScreen = props => {
     checkedAnswerAtom(`${examKey}_${currentQuestion.id}`),
   );
 
-  const getCurrentAnswer = useCallback((item, index, questionIndex) => {
-    if (typeof index === 'number') {
+  const getCurrentAnswer = useCallback((item, index, questionIndex, selectedAnswer) => {
+    if (typeof index === 'number' && selectedAnswer !== undefined) {
       setShowButtonAnswer(true);
+    } else {
+      setShowButtonAnswer(false);
     }
     setAnswered(item);
     setAnsweredQuestionIndex(questionIndex);
