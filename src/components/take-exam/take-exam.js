@@ -15,7 +15,7 @@ import Drawer from 'react-native-drawer';
 import { SceneMap, TabBar, TabView } from 'react-native-tab-view';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 import { indexSentenceAtom } from './recoil/index-sentence';
 import { statusSentenceAtom } from './recoil/status-sentence';
 import ModalReport from './subs/modal-report';
@@ -23,7 +23,7 @@ import QuestionDrawer from './subs/question-drawer';
 import TabScreen from './subs/tab-screen';
 import { styles } from './take-exam.style';
 
-const getScenes = (readOnly, questionList, examKey, noMap) => {
+const getScenes = (readOnly, questionList, examKey, noMap, defaultData) => {
   let scenes = {};
   questionList.forEach(item => {
     scenes[item.id] = () => (
@@ -32,6 +32,7 @@ const getScenes = (readOnly, questionList, examKey, noMap) => {
         readOnly={readOnly}
         examKey={examKey}
         noMap={noMap}
+        defaultData={defaultData}
       />
     );
   });
@@ -39,12 +40,14 @@ const getScenes = (readOnly, questionList, examKey, noMap) => {
 };
 
 const TakeExam = props => {
-  const { questionList, title, readOnly, examKey, noMap } = props;
+  const { questionList, title, readOnly, examKey, noMap, defaultData } = props;
   const { width } = useWindowDimensions();
   const [tabIndex, setTabIndex] = useRecoilState(indexSentenceAtom);
   const resetTabIndex = useResetRecoilState(indexSentenceAtom);
   const resetStatusSentences = useResetRecoilState(statusSentenceAtom(examKey));
-  const setStatusSentences = useSetRecoilState(statusSentenceAtom(examKey));
+  const [statusSentences, setStatusSentences] = useRecoilState(
+    statusSentenceAtom(examKey),
+  );
   const modalReportRef = useRef();
   const [activeFuncSearch, setActiveFuncSearch] = useState(false);
   const navigation = useNavigation();
@@ -60,8 +63,8 @@ const TakeExam = props => {
   );
 
   const renderScene = useMemo(
-    () => getScenes(readOnly, questionList, examKey, noMap),
-    [questionList, readOnly, examKey, noMap],
+    () => getScenes(readOnly, questionList, examKey, noMap, defaultData),
+    [questionList, readOnly, examKey, noMap, defaultData],
   );
 
   const onSubmitExam = useCallback(() => {
@@ -78,15 +81,17 @@ const TakeExam = props => {
   }, [examKey, navigation, title]);
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener('beforeRemove', e => {
-      e.preventDefault();
-      unsubscribe();
-      !noMap && !readOnly &&  onSubmitExam();
-    });
-  }, [navigation, onSubmitExam]);
+    if (!defaultData) {
+      const unsubscribe = navigation.addListener('beforeRemove', e => {
+        e.preventDefault();
+        unsubscribe();
+        !noMap && !readOnly && onSubmitExam();
+      });
+    }
+  }, [navigation, noMap, onSubmitExam, readOnly, defaultData]);
 
   useEffect(() => {
-    if (isEmpty(statusSentenceAtom)) {
+    if (isEmpty(statusSentences)) {
       setStatusSentences(() =>
         questionList.map(item => ({
           id: item.id,
@@ -94,12 +99,18 @@ const TakeExam = props => {
         })),
       );
     }
-  }, [questionList, setStatusSentences]);
+  }, [questionList, setStatusSentences, statusSentences]);
+
+  useEffect(() => {
+    if (defaultData) {
+      setTabIndex(defaultData.id);
+    }
+  }, [defaultData, setTabIndex]);
 
   useEffect(() => {
     return () => {
       resetTabIndex();
-      resetStatusSentences();
+      // resetStatusSentences();
     };
   }, [resetStatusSentences, resetTabIndex]);
 

@@ -1,9 +1,10 @@
 import Text from 'components/text';
-import { memo, useCallback, useState } from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
 import { FlatList, TouchableHighlight, View } from 'react-native';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { checkedAnswerAtom } from '../take-exam/recoil/checked-answer';
+import { selectedAnswerListAtom } from '../take-exam/recoil/selected-answer';
 import { statusSentenceAtom } from '../take-exam/recoil/status-sentence';
 import {
   getCheckBoxColor,
@@ -13,11 +14,20 @@ import {
 import { styles } from './question.style';
 
 const Question = props => {
-  const { data, readOnly, getCurrentAnswer, examKey } = props;
+  const { data, readOnly, getCurrentAnswer, examKey, defaultData } = props;
   const { question, answers, correctAnswer, explainAnswer } = data;
-  const [selectedAnswer, setSelectedAnswer] = useState();
+  const [selectedAnswerList, setSelectedAnswerList] = useRecoilState(
+    selectedAnswerListAtom,
+  );
+  const defaultSelected = selectedAnswerList.find(item => item.id === data.id);
+  const [selectedAnswer, setSelectedAnswer] = useState(
+    defaultSelected?.value || undefined,
+  );
   const statusSentences = useRecoilValue(statusSentenceAtom(examKey));
-  const checkStatus = statusSentences.find(item => item.id === data.id);
+  const checkStatus = statusSentences.find(
+    item => item.id === (defaultData?.id || data.id),
+  );
+
   const isChooseCorrect = checkStatus?.status;
   const checkedAnswer = useRecoilValue(
     checkedAnswerAtom(`${examKey}_${data.id}`),
@@ -25,15 +35,47 @@ const Question = props => {
 
   const onSelectAnswer = useCallback(
     (item, index) => {
-      if (readOnly || checkedAnswer) {
+      if (readOnly || checkedAnswer || defaultData) {
         return;
       }
       getCurrentAnswer && getCurrentAnswer(item, index, data.id);
 
       setSelectedAnswer(index !== selectedAnswer ? index : undefined);
+      setSelectedAnswerList(prev => {
+        const curr = prev.find(itemPrev => itemPrev.id === data.id);
+        if (curr) {
+          return prev.map(itemPrev =>
+            itemPrev.id === data.id ? { id: data.id, value: item.value } : item,
+          );
+        }
+        return [...prev, { id: data.id, value: item.value }];
+      });
     },
-    [readOnly, getCurrentAnswer, data.id, selectedAnswer, checkedAnswer],
+    [
+      readOnly,
+      checkedAnswer,
+      defaultData,
+      getCurrentAnswer,
+      data.id,
+      selectedAnswer,
+      setSelectedAnswerList,
+    ],
   );
+
+  useEffect(() => {
+    if (defaultSelected) {
+      setSelectedAnswer(defaultSelected.value);
+    }
+  }, [defaultSelected]);
+
+  useEffect(() => {
+    if (defaultData && !selectedAnswerList.length) {
+      const currQuestion = statusSentences.find(
+        item => item.id === defaultData?.id,
+      );
+      setSelectedAnswer(currQuestion.id);
+    }
+  }, [defaultData, selectedAnswerList.length, statusSentences]);
 
   return (
     <View style={styles.vItem}>

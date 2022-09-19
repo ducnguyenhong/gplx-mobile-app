@@ -1,15 +1,17 @@
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import NavigationBar from 'components/navigation-bar';
 import Text from 'components/text';
 import { memo } from 'react';
 import { FlatList, SafeAreaView, TouchableOpacity, View } from 'react-native';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { questionListTakeExam } from '../../data-test';
 import { styles } from './result-exam.style';
 
 const ResultExam = props => {
   const route = useRoute();
   const { title, data, examKey } = route.params || {};
   const { questionList, time } = data || {};
+  const navigation = useNavigation();
 
   return (
     <SafeAreaView style={styles.savMain}>
@@ -88,8 +90,18 @@ const ResultExam = props => {
         key="_"
         contentContainerStyle={{ marginHorizontal: 10, paddingBottom: 30 }}
         numColumns={4}
-        renderItem={({ item }) => (
-          <TouchableOpacity activeOpacity={0.8} style={styles.toQuestion}>
+        renderItem={({ item, index }) => (
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={styles.toQuestion}
+            onPress={() => {
+              navigation.navigate('TakeExamDetail', {
+                questionList: questionListTakeExam,
+                title,
+                defaultData: questionListTakeExam[index],
+                examKey,
+              });
+            }}>
             <Text style={{ marginBottom: 3 }}>Câu {item}</Text>
             <MCIcon
               // name={() => {

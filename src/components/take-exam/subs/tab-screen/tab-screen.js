@@ -4,19 +4,22 @@ import Text from 'components/text';
 import { memo, useCallback, useEffect, useState } from 'react';
 import { SafeAreaView, TouchableOpacity, View } from 'react-native';
 import Ionicon from 'react-native-vector-icons/Ionicons';
-import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 import { checkedAnswerAtom } from '../../recoil/checked-answer';
 import { indexSentenceAtom } from '../../recoil/index-sentence';
 import { statusSentenceAtom } from '../../recoil/status-sentence';
 import { styles } from './tab-screen.style';
 
-const TabScreen = ({ questionList, readOnly, examKey, noMap }) => {
+const TabScreen = props => {
+  const { questionList, readOnly, examKey, noMap, defaultData } = props;
   const [tabIndex, setTabIndex] = useRecoilState(indexSentenceAtom);
   const currentQuestion = questionList.find(item => item.id === tabIndex);
   const [showButtonAnswer, setShowButtonAnswer] = useState(false);
   const [answered, setAnswered] = useState();
   const [answereduestionIndex, setAnsweredQuestionIndex] = useState();
-  const setStatusSentences = useSetRecoilState(statusSentenceAtom(examKey));
+  const [statusSentence, setStatusSentences] = useRecoilState(
+    statusSentenceAtom(examKey),
+  );
   const [checkedAnswer, setCheckedAnswer] = useRecoilState(
     checkedAnswerAtom(`${examKey}_${currentQuestion.id}`),
   );
@@ -69,9 +72,10 @@ const TabScreen = ({ questionList, readOnly, examKey, noMap }) => {
           data={currentQuestion}
           readOnly={readOnly}
           getCurrentAnswer={getCurrentAnswer}
+          defaultData={defaultData}
         />
       </View>
-      
+
       {showButtonAnswer && !checkedAnswer && (
         <View style={{ alignItems: 'flex-end' }}>
           <TouchableOpacity
@@ -83,13 +87,14 @@ const TabScreen = ({ questionList, readOnly, examKey, noMap }) => {
           </TouchableOpacity>
         </View>
       )}
-      {readOnly || noMap && (
-        <CollapseList
-          questionList={questionList}
-          currentQuestionIndex={tabIndex}
-          onSelectQuestion={(tab, index) => setTabIndex(index)}
-        />
-      )}
+      {readOnly ||
+        (noMap && (
+          <CollapseList
+            questionList={questionList}
+            currentQuestionIndex={tabIndex}
+            onSelectQuestion={(tab, index) => setTabIndex(index)}
+          />
+        ))}
     </SafeAreaView>
   );
 };

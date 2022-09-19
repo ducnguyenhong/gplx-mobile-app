@@ -1,17 +1,19 @@
 import { useNavigation } from '@react-navigation/native';
 import NavigationBar from 'components/navigation-bar';
 import Text from 'components/text';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { FlatList, SafeAreaView, TouchableOpacity, View } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
 import { selectedLicenseAtom } from 'state-management/selected-license';
+import { selectedAnswerListAtom } from '../../components/take-exam/recoil/selected-answer';
 import { HOME_MENU } from './home.data';
 import { styles } from './home.style';
 
 const Home = () => {
   const navigation = useNavigation();
   const selectedLicense = useRecoilValue(selectedLicenseAtom);
+  const resetSelectedAnswerList = useResetRecoilState(selectedAnswerListAtom);
 
   const onOpenScreen = useCallback(
     screen => {
@@ -23,6 +25,10 @@ const Home = () => {
   const onOpenSetting = useCallback(() => {
     navigation.navigate('SelectLicense');
   }, [navigation]);
+
+  useEffect(() => {
+    resetSelectedAnswerList();
+  }, [resetSelectedAnswerList]);
 
   return (
     <SafeAreaView style={styles.savMain}>
