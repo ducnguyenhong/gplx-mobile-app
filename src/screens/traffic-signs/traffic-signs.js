@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
+import { StackActions, useNavigation } from '@react-navigation/native';
 import NavigationBar from 'components/navigation-bar';
 import Text from 'components/text';
 import { useCallback, useState } from 'react';
@@ -75,11 +75,18 @@ const DATA = [
 const TrafficSigns = () => {
   const navigation = useNavigation();
   const [height, setHeight] = useState(0);
-  const [isChangeView, setIsChangeView] = useState(false)
+  const [isChangeView, setIsChangeView] = useState(false);
 
   const onOpenTrafficSign = useCallback(
     (icon, code, name, content) => {
-      navigation.navigate('TrafficSignDetail', { icon, code, name, content });
+      // navigation.navigate('TrafficSignDetail', { icon, code, name, content });
+      const pushAction = StackActions.push('TrafficSignDetail', {
+        icon,
+        code,
+        name,
+        content,
+      });
+      navigation.dispatch(pushAction);
     },
     [navigation],
   );
@@ -102,7 +109,9 @@ const TrafficSigns = () => {
           sections={DATA}
           keyExtractor={item => `${item.code}`}
           stickySectionHeadersEnabled
-          onViewableItemsChanged={() => {setIsChangeView(true)}}
+          onViewableItemsChanged={() => {
+            setIsChangeView(true);
+          }}
           renderItem={({ item }) => (
             <TouchableOpacity
               activeOpacity={1}
@@ -124,7 +133,11 @@ const TrafficSigns = () => {
             </TouchableOpacity>
           )}
           renderSectionHeader={({ section: { title } }) => (
-            <View style={[styles.trafficSignHeaderList, { opacity: isChangeView ? 0.8 : 1}]}>
+            <View
+              style={[
+                styles.trafficSignHeaderList,
+                { opacity: isChangeView ? 0.8 : 1 },
+              ]}>
               <Text style={styles.trafficSignHeaderListText}>{title}</Text>
             </View>
           )}

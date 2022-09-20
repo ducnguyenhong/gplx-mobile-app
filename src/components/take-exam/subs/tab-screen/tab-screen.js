@@ -16,7 +16,7 @@ const TabScreen = props => {
   const currentQuestion = questionList.find(item => item.id === tabIndex);
   const [showButtonAnswer, setShowButtonAnswer] = useState(false);
   const [answered, setAnswered] = useState();
-  const [answereduestionIndex, setAnsweredQuestionIndex] = useState();
+  const [answeredQuestionIndex, setAnsweredQuestionIndex] = useState();
   const [statusSentence, setStatusSentences] = useRecoilState(
     statusSentenceAtom(examKey),
   );
@@ -27,22 +27,25 @@ const TabScreen = props => {
     checkedAnswerAtom(`${examKey}_${currentQuestion.id}`),
   );
 
-  const getCurrentAnswer = useCallback((item, index, questionIndex, selectedAnswer) => {
-    if (typeof index === 'number' && selectedAnswer !== undefined) {
-      setShowButtonAnswer(true);
-    } else {
-      setShowButtonAnswer(false);
-    }
-    setAnswered(item);
-    setAnsweredQuestionIndex(questionIndex);
-  }, []);
+  const getCurrentAnswer = useCallback(
+    (item, index, questionIndex, selectedAnswer) => {
+      if (typeof index === 'number' && selectedAnswer !== undefined) {
+        setShowButtonAnswer(true);
+      } else {
+        setShowButtonAnswer(false);
+      }
+      setAnswered(item);
+      setAnsweredQuestionIndex(questionIndex);
+    },
+    [],
+  );
 
   const onCheckAnswer = useCallback(() => {
     if (answered) {
       setCheckedAnswer(true);
       setStatusSentences(prev =>
         prev.map(item => {
-          if (item.id === answereduestionIndex) {
+          if (item.id === answeredQuestionIndex) {
             return {
               id: item.id,
               status: currentQuestion.correctAnswer === answered.value,
@@ -56,7 +59,7 @@ const TabScreen = props => {
     answered,
     setCheckedAnswer,
     setStatusSentences,
-    answereduestionIndex,
+    answeredQuestionIndex,
     currentQuestion.correctAnswer,
   ]);
 

@@ -20,7 +20,12 @@ const getMapBgColor = (index, currentQuestionIndex, statusSentences) => {
   return '#bae0f7';
 };
 
-const QuestionMap = ({ questionList, currentQuestionIndex, examKey }) => {
+const QuestionMap = ({
+  questionList,
+  currentQuestionIndex,
+  examKey,
+  title,
+}) => {
   const statusSentences = useRecoilValue(statusSentenceAtom(examKey));
 
   return (
@@ -54,7 +59,7 @@ const QuestionMap = ({ questionList, currentQuestionIndex, examKey }) => {
         </Text>
       </View>
 
-      <QuestionMapTimer />
+      <QuestionMapTimer examKey={examKey} title={title} />
     </View>
   );
 };

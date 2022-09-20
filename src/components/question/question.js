@@ -27,7 +27,6 @@ const Question = props => {
   const checkStatus = statusSentences.find(
     item => item.id === (defaultData?.id || data.id),
   );
-
   const isChooseCorrect = checkStatus?.status;
   const checkedAnswer = useRecoilValue(
     checkedAnswerAtom(`${examKey}_${data.id}`),

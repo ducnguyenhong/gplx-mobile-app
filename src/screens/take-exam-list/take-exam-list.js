@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
+import { StackActions, useNavigation } from '@react-navigation/native';
 import NavigationBar from 'components/navigation-bar';
 import Text from 'components/text';
 import { FlatList, SafeAreaView, TouchableOpacity } from 'react-native';
@@ -20,9 +20,14 @@ const TakeExamList = () => {
         numColumns={3}
         renderItem={({ item }) => (
           <TouchableOpacity
-            onPress={() =>
-              navigation.navigate('TakeExamDetail', { id: item.value })
-            }
+            onPress={() => {
+              // navigation.navigate('TakeExamDetail', { id: item.value })
+
+              const pushAction = StackActions.push('TakeExamDetail', {
+                id: item.value,
+              });
+              navigation.dispatch(pushAction);
+            }}
             activeOpacity={0.8}
             style={{
               alignItems: 'center',

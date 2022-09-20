@@ -1,9 +1,15 @@
-import { useNavigation, useRoute } from '@react-navigation/native';
+import {
+  StackActions,
+  useNavigation,
+  useRoute
+} from '@react-navigation/native';
 import NavigationBar from 'components/navigation-bar';
 import Text from 'components/text';
 import { memo } from 'react';
 import { FlatList, SafeAreaView, TouchableOpacity, View } from 'react-native';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useResetRecoilState } from 'recoil';
+import { statusSentenceAtom } from '../../components/take-exam/recoil/status-sentence';
 import { questionListTakeExam } from '../../data-test';
 import { styles } from './result-exam.style';
 
@@ -12,10 +18,20 @@ const ResultExam = props => {
   const { title, data, examKey } = route.params || {};
   const { questionList, time } = data || {};
   const navigation = useNavigation();
+  const resetStatusSentences = useResetRecoilState(statusSentenceAtom(examKey));
 
   return (
     <SafeAreaView style={styles.savMain}>
-      <NavigationBar title={`Kết quả ${title}`} />
+      <NavigationBar
+        title={`Kết quả ${title}`}
+        onPressGoBack={() => {
+          resetStatusSentences();
+          // const popAction = StackActions.pop(2);
+          const pushAction = StackActions.push('Home');
+          navigation.dispatch(pushAction);
+          // navigation.dispatch(popAction);
+        }}
+      />
 
       <Text style={styles.tResult}>Không đạt</Text>
 
@@ -95,12 +111,19 @@ const ResultExam = props => {
             activeOpacity={0.8}
             style={styles.toQuestion}
             onPress={() => {
-              navigation.navigate('TakeExamDetail', {
+              // navigation.navigate('TakeExamDetail', {
+              //   questionList: questionListTakeExam,
+              //   title,
+              //   defaultData: questionListTakeExam[index],
+              //   examKey,
+              // });
+              const pushAction = StackActions.push('TakeExamDetail', {
                 questionList: questionListTakeExam,
                 title,
                 defaultData: questionListTakeExam[index],
                 examKey,
               });
+              navigation.dispatch(pushAction);
             }}>
             <Text style={{ marginBottom: 3 }}>Câu {item}</Text>
             <MCIcon

@@ -1,4 +1,8 @@
-import { useNavigation } from '@react-navigation/native';
+import {
+  StackActions,
+  useNavigation,
+  useRoute
+} from '@react-navigation/native';
 import NavigationBar from 'components/navigation-bar';
 import QuestionMap from 'components/question-map/question-map';
 import TextInput from 'components/text-input';
@@ -42,9 +46,9 @@ const getScenes = (readOnly, questionList, examKey, noMap, defaultData) => {
 const TakeExam = props => {
   const { questionList, title, readOnly, examKey, noMap, defaultData } = props;
   const { width } = useWindowDimensions();
+  const route = useRoute();
   const [tabIndex, setTabIndex] = useRecoilState(indexSentenceAtom);
   const resetTabIndex = useResetRecoilState(indexSentenceAtom);
-  const resetStatusSentences = useResetRecoilState(statusSentenceAtom(examKey));
   const [statusSentences, setStatusSentences] = useRecoilState(
     statusSentenceAtom(examKey),
   );
@@ -75,24 +79,31 @@ const TakeExam = props => {
       },
       {
         text: 'KẾT THÚC',
-        onPress: () => navigation.navigate('ResultExam', { examKey, title }),
+        onPress: () => {
+          // navigation.navigate('ResultExam', { examKey, title })
+          const pushAction = StackActions.push('ResultExam', {
+            examKey,
+            title,
+          });
+          navigation.dispatch(pushAction);
+        },
       },
     ]);
   }, [examKey, navigation, title]);
 
   useEffect(() => {
-    if (!defaultData) {
-      const unsubscribe = navigation.addListener('beforeRemove', e => {
+    navigation.addListener('beforeRemove', e => {
+      if (!defaultData) {
         e.preventDefault();
-        unsubscribe();
         !noMap && !readOnly && onSubmitExam();
-      });
-    }
-  }, [navigation, noMap, onSubmitExam, readOnly, defaultData]);
+      }
+    });
+    // return () => navigation.removeListener('beforeRemove');
+  }, [navigation, noMap, onSubmitExam, readOnly, defaultData, route.name]);
 
   useEffect(() => {
     if (isEmpty(statusSentences)) {
-      setStatusSentences(() =>
+      setStatusSentences(
         questionList.map(item => ({
           id: item.id,
           status: undefined,
@@ -112,7 +123,7 @@ const TakeExam = props => {
       resetTabIndex();
       // resetStatusSentences();
     };
-  }, [resetStatusSentences, resetTabIndex]);
+  }, [resetTabIndex]);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -193,6 +204,7 @@ const TakeExam = props => {
         />
         {!readOnly && !noMap && (
           <QuestionMap
+            title={title}
             examKey={examKey}
             questionList={questionList}
             currentQuestionIndex={tabIndex}

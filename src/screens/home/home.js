@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
+import { StackActions, useNavigation } from '@react-navigation/native';
 import NavigationBar from 'components/navigation-bar';
 import Text from 'components/text';
 import { useCallback, useEffect } from 'react';
@@ -17,7 +17,9 @@ const Home = () => {
 
   const onOpenScreen = useCallback(
     screen => {
-      navigation.navigate(screen);
+      // navigation.navigate(screen);
+      const pushAction = StackActions.push(screen);
+      navigation.dispatch(pushAction);
     },
     [navigation],
   );

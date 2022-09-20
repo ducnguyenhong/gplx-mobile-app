@@ -1,10 +1,12 @@
+import { StackActions, useNavigation } from '@react-navigation/native';
 import Text from 'components/text';
 import { memo, useEffect, useState } from 'react';
 import { styles } from './question-map.style';
 
-const Timer = () => {
+const Timer = ({ examKey, title }) => {
   const [minutes, setMinutes] = useState(22);
   const [seconds, setSeconds] = useState(0);
+  const navigation = useNavigation();
 
   useEffect(() => {
     let myInterval = setInterval(() => {
@@ -22,6 +24,14 @@ const Timer = () => {
     }, 1000);
     return () => clearInterval(myInterval);
   });
+
+  useEffect(() => {
+    if (minutes === 0 && seconds === 0) {
+      // navigation.navigate('ResultExam', { examKey, title });
+      const pushAction = StackActions.push('ResultExam', { examKey, title });
+      navigation.dispatch(pushAction);
+    }
+  }, [examKey, minutes, navigation, seconds, title]);
 
   return (
     <Text style={styles.tTime}>
